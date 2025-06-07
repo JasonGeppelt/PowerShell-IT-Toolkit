@@ -1,4 +1,5 @@
 # MainMenu.ps1
+
 Clear-Host
 Write-Host "=== IT Automation Toolkit ===" -ForegroundColor Cyan
 
@@ -23,6 +24,8 @@ function Show-Menu {
     Write-Host ""
 }
 
+$exit = $false
+
 do {
     Show-Menu
     $choice = Read-Host "Enter your choice (1-7)"
@@ -33,7 +36,12 @@ do {
         "4" { RunBackups }
         "5" { RunRemoteOps }
         "6" { GenerateInventoryReport }
-        "7" { Write-Host "Exiting..."; break }
-        default { Write-Host "Invalid selection. Please try again." -ForegroundColor Red }
+        "7" {
+            Write-Host "Exiting..."
+            $exit = $true
+        }
+        default {
+            Write-Host "Invalid selection. Please try again." -ForegroundColor Red
+        }
     }
-} while ($true)
+} while (-not $exit)

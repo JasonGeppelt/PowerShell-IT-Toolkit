@@ -1,3 +1,19 @@
+function Write-LogEntry {
+    param (
+        [string]$Message
+    )
+
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logEntry = "$timestamp - $Message"
+
+    $logPath = "$PSScriptRoot\..\logs\actions.log"
+    if (-not (Test-Path $logPath)) {
+        New-Item -ItemType File -Path $logPath -Force | Out-Null
+    }
+
+    Add-Content -Path $logPath -Value $logEntry
+}
+
 function GenerateInventoryReport {
     Clear-Host
     Write-Host "=== Inventory Report ===" -ForegroundColor Yellow
@@ -38,7 +54,7 @@ function GenerateInventoryReport {
         $lines += ""
 
         # ── Drives ──
-        $lines += "=== Drive Information ==="
+        $lines += "=== Logical Drive Information ==="
 
         $logicalDisks = Get-CimInstance Win32_LogicalDisk
         $physicalDisks = Get-CimInstance Win32_DiskDrive
@@ -60,6 +76,14 @@ function GenerateInventoryReport {
             $lines += "$($disk.DeviceID): $totalGB GB total, $freePercent% free, Type: $type"
         }
 
+        $lines += ""
+        $lines += "=== Physical Disk Information ==="
+
+        foreach ($pd in $physicalDisks) {
+            $lines += "$($pd.DeviceID): Model: $($pd.Model), MediaType: $($pd.MediaType), Interface: $($pd.InterfaceType)"
+        }
+
+        $lines += ""
         $lines += ""
 
         # ── Network Interfaces (All) ──
