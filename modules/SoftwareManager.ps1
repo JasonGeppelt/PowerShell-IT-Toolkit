@@ -22,10 +22,10 @@ function Install-Software {
     Try {
         winget install --id "$package" --silent --accept-package-agreements --accept-source-agreements
         Write-Host "Installed $package successfully." -ForegroundColor Green
-        Log-Action "Installed software ${package}"
+        Write-LogEntry "Installed software ${package}"
     } Catch {
         Write-Host "Error installing ${package}: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to install ${package}: $($_.Exception.Message)"
+        Write-LogEntry "Failed to install ${package}: $($_.Exception.Message)"
     }
 
     Pause
@@ -38,10 +38,10 @@ function Uninstall-Software {
     Try {
         winget uninstall --name "$package"
         Write-Host "Uninstalled $package successfully." -ForegroundColor Green
-        Log-Action "Uninstalled software ${package}"
+        Write-LogEntry "Uninstalled software ${package}"
     } Catch {
         Write-Host "Error uninstalling ${package}: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to uninstall ${package}: $($_.Exception.Message)"
+        Write-LogEntry "Failed to uninstall ${package}: $($_.Exception.Message)"
     }
 
     Pause
@@ -52,10 +52,10 @@ function Update-AllSoftware {
     Try {
         winget upgrade --all --silent --accept-package-agreements --accept-source-agreements
         Write-Host "All eligible software has been updated." -ForegroundColor Green
-        Log-Action "Updated all software via Winget"
+        Write-LogEntry "Updated all software via Winget"
     } Catch {
         Write-Host "Error updating software: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to update software: $($_.Exception.Message)"
+        Write-LogEntry "Failed to update software: $($_.Exception.Message)"
     }
 
     Pause

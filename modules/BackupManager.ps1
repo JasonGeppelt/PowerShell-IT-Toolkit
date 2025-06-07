@@ -7,7 +7,7 @@ function RunBackups {
 
     if (-not (Test-Path $source)) {
         Write-Host "Source folder does not exist." -ForegroundColor Red
-        Log-Action "Backup failed: source path '${source}' does not exist"
+        Write-LogEntry "Backup failed: source path '${source}' does not exist"
         Pause
         return
     }
@@ -15,10 +15,10 @@ function RunBackups {
     Try {
         Copy-Item -Path $source -Destination $destination -Recurse -Force
         Write-Host "Backup completed successfully." -ForegroundColor Green
-        Log-Action "Backup completed: ${source} -> ${destination}"
+        Write-LogEntry "Backup completed: ${source} -> ${destination}"
     } Catch {
         Write-Host "Error during backup: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Backup failed from ${source} to ${destination}: $($_.Exception.Message)"
+        Write-LogEntry "Backup failed from ${source} to ${destination}: $($_.Exception.Message)"
     }
 
     Pause

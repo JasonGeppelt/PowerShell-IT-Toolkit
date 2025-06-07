@@ -59,7 +59,7 @@ function GenerateInventoryReport {
 
             $lines += "$($disk.DeviceID): $totalGB GB total, $freePercent% free, Type: $type"
         }
-        
+
         $lines += ""
 
         # ── Network Interfaces (All) ──
@@ -104,10 +104,10 @@ function GenerateInventoryReport {
         $lines | Out-File -FilePath $outputPath -Encoding UTF8
 
         Write-Host "Inventory report saved to:`n$outputPath" -ForegroundColor Green
-        Log-Action "Generated inventory report to ${outputPath}"
+        Write-LogEntry "Generated inventory report to ${outputPath}"
     } Catch {
         Write-Host "Error creating inventory report: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to generate inventory report: $($_.Exception.Message)"
+        Write-LogEntry "Failed to generate inventory report: $($_.Exception.Message)"
     }
 
     Pause

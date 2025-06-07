@@ -1,4 +1,4 @@
-function Log-Action {
+function Write-LogEntry {
     param (
         [string]$Message
     )

@@ -19,7 +19,7 @@ function Show-DiskUsage {
         $percentFree = ($_.Free / $total) * 100
         Write-Host "$($_.Name): Used ${used}GB, Free ${free}GB (${percentFree.ToString("0.0")}%)"
     }
-    Log-Action "Checked disk usage"
+    Write-LogEntry "Checked disk usage"
 }
 
 function Show-MemoryUsage {
@@ -29,7 +29,7 @@ function Show-MemoryUsage {
     $free = [math]::Round($os.FreePhysicalMemory / 1MB, 2)
     $used = [math]::Round($total - $free, 2)
     Write-Host "Total: ${total}GB | Used: ${used}GB | Free: ${free}GB"
-    Log-Action "Checked memory usage"
+    Write-LogEntry "Checked memory usage"
 }
 
 function Show-CPUUsage {
@@ -37,7 +37,7 @@ function Show-CPUUsage {
     $cpu = Get-Counter '\Processor(_Total)\% Processor Time'
     $usage = [math]::Round($cpu.CounterSamples.CookedValue, 2)
     Write-Host "Current CPU Usage: ${usage}%"
-    Log-Action "Checked CPU usage"
+    Write-LogEntry "Checked CPU usage"
 }
 
 function Show-Uptime {
@@ -49,5 +49,5 @@ function Show-Uptime {
     $minutes = $uptime.Minutes
     Write-Host "Last Boot: $lastBoot"
     Write-Host "Uptime: ${days}d ${hours}h ${minutes}m"
-    Log-Action "Checked system uptime"
+    Write-LogEntry "Checked system uptime"
 }

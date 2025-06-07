@@ -24,10 +24,10 @@ function Create-LocalUser {
         New-LocalUser -Name $username -Password $password -FullName $username -Description "Created by IT Toolkit"
         Add-LocalGroupMember -Group "Users" -Member $username
         Write-Host "User '$username' created successfully." -ForegroundColor Green
-        Log-Action "Created user $username"
+        Write-LogEntry "Created user $username"
     } Catch {
         Write-Host "Error creating user: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to create user ${username}: $($_.Exception.Message)"
+        Write-LogEntry "Failed to create user ${username}: $($_.Exception.Message)"
     }
 
     Pause
@@ -40,10 +40,10 @@ function Disable-LocalUser {
     Try {
         Disable-LocalUser -Name $username
         Write-Host "User '$username' has been disabled." -ForegroundColor Green
-        Log-Action "Disabled user $username"
+        Write-LogEntry "Disabled user $username"
     } Catch {
         Write-Host "Error disabling user: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to disable user ${username}: $($_.Exception.Message)"
+        Write-LogEntry "Failed to disable user ${username}: $($_.Exception.Message)"
     }
 
     Pause
@@ -57,10 +57,10 @@ function Reset-UserPassword {
     Try {
         Set-LocalUser -Name $username -Password $password
         Write-Host "Password for '$username' has been reset." -ForegroundColor Green
-        Log-Action "Reset password for $username"
+        Write-LogEntry "Reset password for $username"
     } Catch {
         Write-Host "Error resetting password: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to reset password for ${username}: $($_.Exception.Message)"
+        Write-LogEntry "Failed to reset password for ${username}: $($_.Exception.Message)"
     }
 
     Pause

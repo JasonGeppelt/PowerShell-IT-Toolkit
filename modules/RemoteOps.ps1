@@ -20,10 +20,10 @@ function Reboot-RemoteMachine {
     Try {
         Invoke-Command -ComputerName $remote -ScriptBlock { Restart-Computer -Force } -ErrorAction Stop
         Write-Host "Reboot command sent to '$remote'." -ForegroundColor Green
-        Log-Action "Sent reboot command to ${remote}"
+        Write-LogEntry "Sent reboot command to ${remote}"
     } Catch {
         Write-Host "Failed to reboot ${remote}: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to reboot ${remote}: $($_.Exception.Message)"
+        Write-LogEntry "Failed to reboot ${remote}: $($_.Exception.Message)"
     }
 
     Pause
@@ -46,10 +46,10 @@ function Get-RemoteSystemInfo {
         Write-Host "Computer Name: $($info.ComputerName)"
         Write-Host "OS: $($info.OS)"
         Write-Host "Last Boot: $($info.LastBoot)"
-        Log-Action "Retrieved system info from ${remote}"
+        Write-LogEntry "Retrieved system info from ${remote}"
     } Catch {
         Write-Host "Failed to get info from ${remote}: $($_.Exception.Message)" -ForegroundColor Red
-        Log-Action "Failed to get system info from ${remote}: $($_.Exception.Message)"
+        Write-LogEntry "Failed to get system info from ${remote}: $($_.Exception.Message)"
     }
 
     Pause
